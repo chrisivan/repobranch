@@ -1,9 +1,10 @@
-name: Build C# Console
+name: Build .NET Console App
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
@@ -18,5 +19,8 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
-    - name: Build project
-      run: dotnet build repobranch.sln
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
